@@ -4,15 +4,23 @@ import { IUserRepository } from "../../user.repository";
 
 export class UserRepositoryPrisma implements IUserRepository {
   async save(user: User): Promise<User> {
-    const savedUser = prismaClient.user.create({
+    const savedUser = await prismaClient.user.create({
       data: {
         ...user,
+        birthday: new Date(user.birthday),
       },
     });
 
     return savedUser;
   }
-  findUserByEmail(email: string): Promise<User | undefined> {
-    throw new Error("Method not implemented.");
+  async findUserByEmail(email: string): Promise<User | undefined> {
+    const findUser = await prismaClient.user.findUnique({
+      where: { email },
+    });
+    if (findUser) {
+      return findUser;
+    } else {
+      return undefined;
+    }
   }
 }
