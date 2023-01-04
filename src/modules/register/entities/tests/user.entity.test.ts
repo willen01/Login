@@ -3,7 +3,7 @@ import { User } from "../user.entity";
 
 describe("User entity", () => {
   test("should be able to create a new user", async () => {
-    const userTest = User.create({
+    const userTest = await User.create({
       name: "Jhon",
       lastname: "Doe",
       email: "jhon.doe@email.com",

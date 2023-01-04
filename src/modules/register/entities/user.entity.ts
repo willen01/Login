@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { PasswordBcrypt } from "../../../infra/shared/crypto/password.bcrypt";
 
 interface IUser {
   name: string;
@@ -29,7 +30,13 @@ export class User {
     this.birthday = props.birthday;
   }
 
-  static create(props: IUser) {
+  static async create(props: IUser) {
+    const bcrypt = new PasswordBcrypt();
+    const passwordHashed = await bcrypt.hash(props.password);
+
+    //criptografa password enviado pelo cliente
+    props.password = passwordHashed;
+
     const user = new User(props);
     return user;
   }

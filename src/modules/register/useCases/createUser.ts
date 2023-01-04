@@ -20,7 +20,7 @@ export class CreateUserUseCase {
 
     if (findUserAlreadyRegistered) throw new Error("User already registered!");
 
-    const user = User.create(data);
+    const user = await User.create(data);
     const userCreated = await this.userRepository.save(user);
     return userCreated;
   }
