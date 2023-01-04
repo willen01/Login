@@ -1,5 +1,5 @@
-import { User } from "../entities/user.entity";
-import { IUserRepository } from "../respositories/user.repository";
+import { IUserRepository } from "../../respositories/user.repository";
+import { User } from "../../entities/user.entity";
 
 export type CreateUserRequest = {
   name: string;

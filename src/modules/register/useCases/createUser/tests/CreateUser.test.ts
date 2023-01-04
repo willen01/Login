@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { UserRepositoryInMemory } from "../../respositories/implementation/inMemory/UserRepositoryInMemory";
+import { UserRepositoryInMemory } from "../../../respositories/implementation/inMemory/UserRepositoryInMemory";
 import { CreateUserRequest, CreateUserUseCase } from "../createUser";
 
 describe("CreateUser UseCase", () => {
