@@ -62,4 +62,16 @@ describe("LoginUser UseCase", () => {
       await loginUseCase.execute(userCredentials);
     }).rejects.toThrowError("Email or password incorrect!");
   });
+  test("should not be able to create a user with empty fields", async () => {
+    const userCredentials = {
+      email: "",
+      password: "12312",
+    };
+
+    const loginUseCase = new LoginUserUseCase(repository);
+
+    expect(async () => {
+      await loginUseCase.execute(userCredentials);
+    }).rejects.toThrowError("Invalid or empty fields!");
+  });
 });

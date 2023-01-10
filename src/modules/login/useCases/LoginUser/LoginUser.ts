@@ -12,6 +12,10 @@ export class LoginUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(data: LoginUserRequest) {
+    if (!data.email || !data.password) {
+      throw new CustomError("Invalid or empty fields!", 400);
+    } //Verifica se o usuário não envou ou enviou algum campo de login vazio
+
     const findUser = await this.userRepository.findUserByEmail(data.email); // busca se o usuário está cadastrado no banco de dados.
 
     if (!findUser) throw new Error("Email or password incorrect!");

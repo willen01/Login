@@ -14,6 +14,16 @@ export class CreateUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(data: CreateUserRequest) {
+    if (
+      !data.name ||
+      !data.lastname ||
+      !data.email ||
+      !data.password ||
+      !data.birthday
+    ) {
+      throw new CustomError("Invalid or empty fields!", 400);
+    } //Verifica se o usuário não envou ou enviou algum campo de cadastro vazio
+
     //deve verificar se o usuário já está cadastrado
     const findUserAlreadyRegistered = await this.userRepository.findUserByEmail(
       data.email

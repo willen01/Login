@@ -37,4 +37,20 @@ describe("CreateUser UseCase", () => {
       await createUserUseCase.execute(userFake);
     }).rejects.toThrowError("User already registered!");
   });
+
+  test("should not be able to create a user with empty fields", async () => {
+    const userRepository = new UserRepositoryInMemory();
+    const createUserUseCase = new CreateUserUseCase(userRepository);
+
+    const userFake: CreateUserRequest = {
+      name: "",
+      lastname: "",
+      email: "jhone.doe@email.com",
+      birthday: new Date("1999-05-03"),
+      password: "123123",
+    };
+    expect(async () => {
+      await createUserUseCase.execute(userFake);
+    }).rejects.toThrowError("Invalid or empty fields!");
+  });
 });
