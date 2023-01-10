@@ -1,3 +1,4 @@
+import { CustomError } from "../../../../errors/custon.error";
 import { prismaClient } from "../../../../infra/database/prisma.config";
 import { PasswordBcrypt } from "../../../../infra/shared/crypto/password.bcrypt";
 import { IUserRepository } from "../../../register/respositories/user.repository";
@@ -22,7 +23,7 @@ export class LoginUserUseCase {
       findUser.password
     );
 
-    if (!isEqual) throw new Error("Email or password incorrect!");
+    if (!isEqual) throw new CustomError("Email or password incorrect!", 403);
 
     //login realizado com sucesso!
     return true;
