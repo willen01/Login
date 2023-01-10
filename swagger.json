@@ -1,0 +1,104 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Serviço de login",
+    "description": "Esta api é responsável pelo cadastro e login de usuários de uma aplicação",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/user/register": {
+      "post": {
+        "tags": ["Register"],
+        "summary": "Realiza o cadastro de novos usuários",
+        "description": "Este endpoint realiza o cadastro de usuários que ainda não possuem conta na aplicação",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "$schema": {
+                  "$ref": "#/components/schemas/createUserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "User already registered!"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "createUserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "example": "Jhon"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "Sobrenome do usuário",
+            "example": "Doe"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha usuário",
+            "example": "123159"
+          },
+          "birthday": {
+            "type": "date-time",
+            "description": "Data de aniversário do usuário",
+            "example": "1993-02-05"
+          }
+        }
+      },
+      "createUserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id do usuário",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "example": "Jhon"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "Sobrenome do usuário",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "email do usuário",
+            "example": "bob.doe@email.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "123123"
+          },
+          "birthday": {
+            "type": "date-time",
+            "description": "Data de nascimento do usuário",
+            "example": "1999-10-05T00:00:00.000Z"
+          }
+        }
+      }
+    }
+  }
+}
