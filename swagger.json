@@ -9,7 +9,7 @@
     "/api/user/register": {
       "post": {
         "tags": ["Register"],
-        "summary": "Realiza o cadastro de novos usuários",
+        "summary": "Cadastro de novos usuários",
         "description": "Este endpoint realiza o cadastro de usuários que ainda não possuem conta na aplicação",
         "requestBody": {
           "content": {
@@ -35,6 +35,30 @@
           }
         }
       }
+    },
+    "/api/user/login": {
+      "post": {
+        "tags": ["Login"],
+        "summary": "Login de usuário",
+        "description": "Este endpoint realiza o login de um usuário já cadastrado",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loginUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "403": {
+            "description": "Email or password incorrect!"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -51,6 +75,11 @@
             "type": "string",
             "description": "Sobrenome do usuário",
             "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "email do usuário",
+            "example": "jhon.doe@email.com"
           },
           "password": {
             "type": "string",
@@ -96,6 +125,21 @@
             "type": "date-time",
             "description": "Data de nascimento do usuário",
             "example": "1999-10-05T00:00:00.000Z"
+          }
+        }
+      },
+      "loginUserRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email do usuário",
+            "example": "jhon.doe@email.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "123159"
           }
         }
       }
