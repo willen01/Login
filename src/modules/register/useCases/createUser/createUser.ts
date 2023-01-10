@@ -1,5 +1,6 @@
 import { IUserRepository } from "../../respositories/user.repository";
 import { User } from "../../entities/user.entity";
+import { CustomError } from "../../../../errors/custon.error";
 
 export type CreateUserRequest = {
   name: string;
@@ -18,7 +19,8 @@ export class CreateUserUseCase {
       data.email
     );
 
-    if (findUserAlreadyRegistered) throw new Error("User already registered!");
+    if (findUserAlreadyRegistered)
+      throw new CustomError("User already registered!", 422);
 
     const user = await User.create(data);
     const userCreated = await this.userRepository.save(user);
