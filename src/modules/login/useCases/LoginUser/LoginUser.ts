@@ -1,6 +1,6 @@
 import { CustomError } from "../../../../errors/custon.error";
-import { prismaClient } from "../../../../infra/database/prisma.config";
-import { PasswordBcrypt } from "../../../../infra/shared/crypto/password.bcrypt";
+import { IpasswordCrypto } from "../../../../infra/shared/crypto/password.crypto";
+import { IToken } from "../../../../infra/shared/token/token";
 import { IUserRepository } from "../../../register/respositories/user.repository";
 
 export type LoginUserRequest = {
@@ -9,27 +9,36 @@ export type LoginUserRequest = {
 };
 
 export class LoginUserUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    private userRepository: IUserRepository,
+    private passwordCrypto: IpasswordCrypto,
+    private token: IToken
+  ) {}
 
   async execute(data: LoginUserRequest) {
-    if (!data.email || !data.password) {
-      throw new CustomError("Invalid or empty fields!", 400);
-    } //Verifica se o usuário não envou ou enviou algum campo de login vazio
+    //vefifica se o email ou senha não foram enviados pelo usuário.
+    if (!data.email || !data.password)
+      throw new CustomError("Email/Password is empty!", 401);
 
-    const findUser = await this.userRepository.findUserByEmail(data.email); // busca se o usuário está cadastrado no banco de dados.
+    //busca a existência de um usuário na base de dados com as informações enviadas pelo cliente
+    const user = await this.userRepository.findUserByEmail(data.email);
 
-    if (!findUser) throw new Error("Email or password incorrect!");
+    //erro para usuário não encontrado
+    if (!user) throw new CustomError("Email or password incorrect!", 401);
 
-    //verifica se o password recebido é compatível com o registrado no banco
-    const comparePassword = new PasswordBcrypt();
-    const isEqual: boolean = await comparePassword.compare(
+    //verifica se a senha recebida é compatível com a armazenada no banco
+    const comparePasswordEquals: boolean = await this.passwordCrypto.compare(
       data.password,
-      findUser.password
+      user.password
     );
 
-    if (!isEqual) throw new CustomError("Email or password incorrect!", 403);
+    //erro para senha incorreta
+    if (!comparePasswordEquals)
+      throw new CustomError("Email or password incorrect!", 401);
 
-    //login realizado com sucesso!
-    return true;
+    //gera um token jwt
+    const token = this.token.create(user);
+
+    return token;
   }
 }
