@@ -1,16 +1,16 @@
 import { PasswordBcrypt } from "../../../infra/shared/crypto/password.bcrypt";
 import { JWTToken } from "../../../infra/shared/token/jwtToken";
 import { UserRepositoryPrisma } from "../../register/respositories/implementation/prisma/UserRepositoryPrisma";
-import { ForgotPasswordController } from "./forgotPasswordController";
+import { ResetPasswordController } from "./resetPasswordController";
 
 const userRepository = new UserRepositoryPrisma();
-const passcrypto = new PasswordBcrypt();
-const jwtToken = new JWTToken();
+const passwordcypto = new PasswordBcrypt();
+const jwtToketn = new JWTToken();
 
-const forgotPasswordController = new ForgotPasswordController(
+const resetPasswordController = new ResetPasswordController(
   userRepository,
-  passcrypto,
-  jwtToken
+  passwordcypto,
+  jwtToketn
 );
 
-export { forgotPasswordController };
+export { resetPasswordController };
