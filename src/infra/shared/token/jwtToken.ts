@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
-import { IToken, TokenUser } from "./token";
+import { idInToken, IToken, TokenUser } from "./token";
 import { createHmac } from "crypto";
 import "dotenv/config";
 
@@ -25,7 +25,15 @@ export class JWTToken implements IToken {
   }
   validate(token: string): TokenUser | null {
     try {
-      return jwt.verify(token, this.TOKEN_SECRET) as TokenUser;
+      return jwt.verify(token, this.TOKEN_SECRET_CRYPTO) as TokenUser;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  decode(token: string): TokenUser | null {
+    try {
+      return jwt.verify(token, this.TOKEN_SECRET_CRYPTO) as TokenUser;
     } catch (error) {
       return null;
     }
