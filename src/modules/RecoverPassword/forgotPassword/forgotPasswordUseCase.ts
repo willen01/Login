@@ -2,14 +2,11 @@ import { User } from "@prisma/client";
 import { CustomError } from "../../../errors/custon.error";
 import { IUserRepository } from "../../register/respositories/user.repository";
 import { transport } from "../../../email/mailer";
-import nodemailer from "nodemailer";
-import { IpasswordCrypto } from "../../../infra/shared/crypto/password.crypto";
 import { IToken } from "../../../infra/shared/token/token";
 
 export class ForgotPasswordUseCase {
   constructor(
     private userRepository: IUserRepository,
-    private passcrypto: IpasswordCrypto,
     private tokenUser: IToken
   ) {}
 

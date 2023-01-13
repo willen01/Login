@@ -7,7 +7,6 @@ import { ForgotPasswordUseCase } from "./forgotPasswordUseCase";
 export class ForgotPasswordController {
   constructor(
     private userRepository: IUserRepository,
-    private passcrypto: IpasswordCrypto,
     private tokenUser: IToken
   ) {}
 
@@ -16,7 +15,6 @@ export class ForgotPasswordController {
       const { email } = request.body;
       const forgotPasswordUseCase = new ForgotPasswordUseCase(
         this.userRepository,
-        this.passcrypto,
         this.tokenUser
       );
       const refreshPasswordCode = await forgotPasswordUseCase.execute(email);
