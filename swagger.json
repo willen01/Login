@@ -83,6 +83,38 @@
           }
         }
       }
+    },
+    "/api/user/resetpassword?tokenId=value": {
+      "post": {
+        "tags": ["Forgot Password"],
+        "summary": "Recuperação de senha",
+        "description": "Este endpoint realiza a mudança de senha após verificada a existência de um usuário cadastrado no banco.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tokenId",
+            "description": "token retornado após a resposta bem sucedida ao endpoint /forgotpassword",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/resetpassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "password and confirmPassword are diferent"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -174,6 +206,21 @@
             "type": "string",
             "description": "email do usuário",
             "example": "jhon.doe@email.com"
+          }
+        }
+      },
+      "resetpassword": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "123456"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "123456"
           }
         }
       }
