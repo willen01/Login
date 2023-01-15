@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { CustomError } from "../../../errors/custon.error";
 import { IpasswordCrypto } from "../../../infra/shared/crypto/password.crypto";
 import { IToken } from "../../../infra/shared/token/token";
 import { IUserRepository } from "../../register/respositories/user.repository";
