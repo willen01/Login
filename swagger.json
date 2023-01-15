@@ -59,6 +59,30 @@
           }
         }
       }
+    },
+    "/api/user/forgotpassword": {
+      "post": {
+        "tags": ["Forgot Password"],
+        "summary": "Envio de email para recuperação de senha",
+        "description": "Este endpoint realiza o envio de um email para um usuário já cadastrado para posterior recuperação de sua senha",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/forgotPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "refreshPasswordCode"
+          },
+          "404": {
+            "description": "user not registered"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -140,6 +164,16 @@
             "type": "string",
             "description": "Senha do usuário",
             "example": "123159"
+          }
+        }
+      },
+      "forgotPasswordRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email do usuário",
+            "example": "jhon.doe@email.com"
           }
         }
       }
