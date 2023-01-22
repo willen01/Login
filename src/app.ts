@@ -9,7 +9,7 @@ const port = process.env.PORT;
 
 app.use(express.json());
 app.use(router);
-// app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.listen(port, () => {
   console.log(`Server road on port ${port}`);
