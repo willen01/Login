@@ -8,7 +8,8 @@
     "start": "node ./dist/src/app.js",
     "start:dev": "ts-node-dev ./src/app.ts",
     "test": "vitest",
-    "migrate:run": "prisma migrate dev"
+    "migrate:run": "prisma migrate dev",
+    "vercel-build": "npx prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^4.8.0",
